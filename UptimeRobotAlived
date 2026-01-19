@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReplitKeepAlive</title>
+  <style>
+    body {
+      background: #0f0f0f;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #log {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #00ff88;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Keeping Replit Alived</h1>
+<p>Status: <span id="status">Idle</span></p>
+
+<button onclick="start()">Start Pinging</button>
+
+<div id="log"></div>
+
+<script>
+const URL = "https://034a49d4-3317-4477-bd89-f700e86cea37-00-kz7hjtipa6sb.worf.replit.dev";
+let interval;
+
+function start() {
+  if (interval) return;
+  document.getElementById("status").textContent = "Running";
+
+  ping();
+  interval = setInterval(ping, 240000); // 4 minutes
+}
+
+function ping() {
+  fetch(URL, { cache: "no-store" })
+    .then(() => {
+      document.getElementById("log").innerHTML =
+        "Pinged at " + new Date().toLocaleTimeString();
+    })
+    .catch(() => {
+      document.getElementById("log").innerHTML =
+        "Ping failed at " + new Date().toLocaleTimeString();
+    });
+}
+</script>
+
+</body>
+</html>
